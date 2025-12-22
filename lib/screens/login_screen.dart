@@ -1,34 +1,41 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'register_screen.dart';
+import 'forgot_password_screen.dart';
+import 'main_navigation.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.local_hospital,
-                size: 80,
+return Scaffold(
+  backgroundColor: Colors.blue,
+  resizeToAvoidBottomInset: true, // ✅ penting
+  body: SafeArea(
+    child: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 40),
+
+            const Icon(
+              Icons.local_hospital,
+              size: 80,
+              color: Colors.white,
+            ),
+            const SizedBox(height: 20),
+
+            const Text(
+              'Aplikasi Kesehatan',
+              style: TextStyle(
                 color: Colors.white,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'Aplikasi Kesehatan',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 40),
+            ),
+            const SizedBox(height: 40),
 
               // EMAIL
               TextField(
@@ -69,11 +76,10 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // 🔥 LANGSUNG MASUK MENU UTAMA
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const HomeScreen(),
+                      builder: (_) => const MainNavigation(),
                     ),
                   );
                 },
@@ -86,10 +92,45 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
+              const SizedBox(height: 16),
+
+              // 🔥 BUAT AKUN BARU
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const RegisterScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Buat Akun Baru',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+
+              // 🔥 LUPA PASSWORD
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          const ForgotPasswordScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Lupa Password?',
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ),
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 }

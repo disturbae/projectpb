@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-// IMPORT SEMUA MENU
+// IMPORT MENU YANG DIPAKAI SAJA
 import 'chat/chat_list_screen.dart';
-import 'medicine/medicine_list_screen.dart';
+import 'medicine/beli_obat_screen.dart';
 import 'prescription/prescription_upload_screen.dart';
 import 'appointment/appointment_doctor_list.dart';
 
@@ -32,11 +32,7 @@ class HomeScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 32,
                     backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      size: 36,
-                      color: Colors.blue,
-                    ),
+                    child: Icon(Icons.person, size: 36, color: Colors.blue),
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -48,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Semoga lekas sehat 🙏',
+                    'Selamat Datang Di E-Kontrol',
                     style: TextStyle(color: Colors.white70),
                   ),
                 ],
@@ -87,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const MedicineListScreen(),
+                            builder: (_) => const BeliObatScreen(),
                           ),
                         );
                       },
