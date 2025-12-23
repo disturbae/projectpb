@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../history/history_data.dart';
+import '../history/history_obat_screen.dart';
 
 class BeliObatScreen extends StatefulWidget {
   const BeliObatScreen({super.key});
@@ -49,11 +51,12 @@ class _BeliObatScreenState extends State<BeliObatScreen> {
     });
   }
 
+  // ================= QRIS POPUP =================
   void showQrisPopup() {
     showDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (dialogContext) {
+      barrierDismissible: false,
+      builder: (context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -66,19 +69,13 @@ class _BeliObatScreenState extends State<BeliObatScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                'assets\images\qris.png',
+                'assets/images/qris.png',
                 height: 220,
                 fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Text(
-                    '❌ Gambar QRIS tidak ditemukan',
-                    style: TextStyle(color: Colors.red),
-                  );
-                },
               ),
               const SizedBox(height: 16),
               const Text('Total Bayar'),
-              const SizedBox(height: 4),
+              const SizedBox(height: 6),
               Text(
                 'Rp $totalHarga',
                 style: const TextStyle(
@@ -90,22 +87,40 @@ class _BeliObatScreenState extends State<BeliObatScreen> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
+              onPressed: () => Navigator.pop(context),
               child: const Text('Batal'),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(dialogContext);
+                // ===== SIMPAN KE HISTORY =====
+                final List<Map<String, dynamic>> obatDibeli =
+                    keranjang.entries.map((e) {
+                  return {
+                    'nama': e.key,
+                    'qty': e.value,
+                  };
+                }).toList();
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('✅ Pembayaran berhasil'),
-                  ),
+                HistoryData.tambahHistory(
+                  obat: obatDibeli,
+                  total: totalHarga,
                 );
 
+                // ===== TUTUP POPUP =====
+                Navigator.pop(context);
+
+                // ===== KOSONGKAN KERANJANG =====
                 setState(() {
                   keranjang.clear();
                 });
+
+                // ===== PINDAH KE HISTORY =====
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const HistoryObatScreen(),
+                  ),
+                );
               },
               child: const Text('Saya Sudah Bayar'),
             ),
@@ -121,6 +136,7 @@ class _BeliObatScreenState extends State<BeliObatScreen> {
       appBar: AppBar(title: const Text('Beli Obat')),
       body: Column(
         children: [
+          // ================= LIST OBAT =================
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -189,6 +205,7 @@ class _BeliObatScreenState extends State<BeliObatScreen> {
             ),
           ),
 
+          // ================= TOTAL & BAYAR =================
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(

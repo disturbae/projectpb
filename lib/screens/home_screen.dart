@@ -19,33 +19,91 @@ class HomeScreen extends StatelessWidget {
             // ================= PROFIL =================
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(vertical: 28),
               decoration: const BoxDecoration(
-                color: Colors.blue,
+                gradient: LinearGradient(
+                  colors: [Colors.blue, Colors.lightBlueAccent],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
+                  bottomLeft: Radius.circular(28),
+                  bottomRight: Radius.circular(28),
                 ),
               ),
               child: Column(
-                children: const [
-                  CircleAvatar(
-                    radius: 32,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 36, color: Colors.blue),
+                children: [
+                  // AVATAR
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.6),
+                    ),
+                    child: const CircleAvatar(
+                      radius: 42,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        size: 48,
+                        color: Colors.blue,
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 12),
+
+                  // NAMA
+                  const Text(
                     'Baihaqi',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    'Selamat Datang Di E-Kontrol',
-                    style: TextStyle(color: Colors.white70),
+                  const SizedBox(height: 4),
+
+                  // SUBTITLE
+                  const Text(
+                    'Selamat Datang di E-Kontrol',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // INFO CARD
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      elevation: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 14,
+                          horizontal: 20,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            _ProfileInfo(
+                              icon: Icons.verified_user,
+                              label: 'Status',
+                              value: 'Aktif',
+                            ),
+                            _ProfileInfo(
+                              icon: Icons.local_hospital,
+                              label: 'Layanan',
+                              value: 'Online',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -155,6 +213,43 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// ================= PROFILE INFO WIDGET =================
+class _ProfileInfo extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const _ProfileInfo({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.blue),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          value,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

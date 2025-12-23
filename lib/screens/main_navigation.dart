@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'home_screen.dart';
 import 'history/history_obat_screen.dart';
-import 'queue/antrian_rs_screen.dart';
 import 'profile_screen.dart';
-
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -18,7 +17,6 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> _pages = const [
     HomeScreen(),
     HistoryObatScreen(),
-    AntrianRsScreen(),
     ProfileScreen(),
   ];
 
@@ -28,8 +26,6 @@ class _MainNavigationState extends State<MainNavigation> {
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
@@ -41,12 +37,8 @@ class _MainNavigationState extends State<MainNavigation> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long),
+            icon: Icon(Icons.history),
             label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.confirmation_number),
-            label: 'Antrian',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
